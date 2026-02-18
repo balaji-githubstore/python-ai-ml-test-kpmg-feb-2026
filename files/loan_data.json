@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Balaji",
+        "age": 32,
+        "city": "Chennai",
+        "salary": 50000,
+        "loan_status": "Approved"
+    },
+    {
+        "name": "Arun",
+        "age": 17,
+        "city": "Bangalore",
+        "salary": 60000,
+        "loan_status": "Rejected"
+    },
+    {
+        "name": "Divya",
+        "age": 25,
+        "city": "Hyderabad",
+        "salary": null,
+        "loan_status": "Approved"
+    },
+    {
+        "name": "Jack",
+        "age": 120,
+        "city": "Hyderabad",
+        "salary": 45000,
+        "loan_status": "Approved"
+    },
+    {
+        "name": "Arun",
+        "age": 17,
+        "city": "Bangalore",
+        "salary": 60000,
+        "loan_status": "Rejected"
+    },
+    {
+        "name": null,
+        "age": 30,
+        "city": "",
+        "salary": -1000,
+        "loan_status": "Approved"
+    },
+    {
+        "name": "Meena",
+        "age": 29,
+        "city": "Chennai",
+        "salary": 52000,
+        "loan_status": "Approved"
+    },
+    {
+        "name": "Rahul",
+        "age": 45,
+        "city": "Mumbai",
+        "salary": 0,
+        "loan_status": "Rejected"
+    }
+]
