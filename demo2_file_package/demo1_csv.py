@@ -12,6 +12,7 @@ print("*"*50)
 # column wise missing value
 # fillna --> finds replace all nan values to given value
 print(df.isnull().sum())
+print(df.isnull().sum().sum())
 df["Age"]=df["Age"].fillna(df["Age"].mean())
 print(df.isnull().sum())
 
