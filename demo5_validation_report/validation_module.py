@@ -28,7 +28,7 @@ def validate_duplicate(df:pd.DataFrame,report:ValidationReport):
     if dup_count == 0:
         report.add_result("Duplicate Check","PASS")
     else:
-        report.add_result("Duplicate Check","FAIL")
+        report.add_result("Duplicate Check","FAIL",f"Duplicate rows: {dup_count}")
 
 # Call load_data(), validate_missing(), validate_duplicate()
 
@@ -44,3 +44,4 @@ validate_missing(df,report_obj)
 validate_duplicate(df,report_obj)
 
 report_obj.summary()
+
