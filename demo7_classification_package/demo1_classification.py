@@ -11,7 +11,7 @@ df=pd.read_csv("files/Titanic-Dataset.csv")
 # print(df.head())
 print(df["Age"].mean())
 
-df=df[["Survived","Pclass","Sex","Age","Fare"]]
+df=df[["Survived","Pclass","Age","Fare"]]
 
 # print(df.head())
 # check for missing values and update with mean
@@ -58,7 +58,7 @@ print(y_test[0])
   FN TP]]
 
 """
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix,precision_score,recall_score
 import matplotlib.pyplot as plt
 
 cm=confusion_matrix(y_test,y_pred)
@@ -80,3 +80,32 @@ FP --> predicted = survived (1) ,  actual = not survived (0)
 FN --> predicted = non survived (0),  actual = survived (1) 
 
 """
+
+"""
+precision --> out of all predicted as survived, how many actually survived?
+--> true positive out of predicted postivities 
+--> quality of the model 
+precision = TP/(TP+FP)
+
+recall --> out of all actual survivor, how many the model correctely detected?
+--> true positive out of real positive 
+--> quanitity of the model 
+
+--> out of all  all actual survivor --> only 41% were correctly identified by model 
+
+recall = TP/(TP+FN)
+
+"""
+
+precision=precision_score(y_test,y_pred)
+recall=recall_score(y_test,y_pred)
+print(precision)
+print(recall)
+
+
+# trade off prec-recall
+y_prob=model.predict_proba(X_test)
+print(y_prob)
+
+
+# roc-auc
