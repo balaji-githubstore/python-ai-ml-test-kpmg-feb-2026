@@ -34,6 +34,9 @@ print(X_test)
 # predicting y_pred on the test set 
 y_pred= model.predict(X_test)
 
+# predict based on new record 
+# y_pred_new= model.predict([[7,1560,0,1658,1969,2,1,8059]])
+# print(y_pred_new)
 
 # QA should know below details 
 # compare y_pred (value predicted by model) vs y_test (actual value from dataset) 

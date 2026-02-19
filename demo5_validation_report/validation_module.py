@@ -35,7 +35,7 @@ def validate_duplicate(df:pd.DataFrame,report:ValidationReport):
 report_obj=ValidationReport()
 
 # Call load_data()
-df=load_data("files/sale_prices_practice.csv",report_obj)
+df=load_data("files/Titanic-Dataset.csv",report_obj)
 
 # call validate_missing()
 validate_missing(df,report_obj)
