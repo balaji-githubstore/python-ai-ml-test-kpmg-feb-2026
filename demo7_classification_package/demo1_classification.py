@@ -81,7 +81,6 @@ FP --> predicted = survived (1) ,  actual = not survived (0)
 FN --> predicted = non survived (0),  actual = survived (1) 
 
 """
-
 """
 precision --> out of all predicted as survived, how many actually survived?
 --> true positive out of predicted postivities 
