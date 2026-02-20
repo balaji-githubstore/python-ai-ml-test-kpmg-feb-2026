@@ -21,7 +21,7 @@ y=np.array(df["SalePrice"])
 
 # 80% training (X_train, y_train)
 # 20 % testing (X_test, y_test)
-X_train,X_test,y_train,y_test =train_test_split(X,y,test_size=0.2,random_state=1)
+X_train,X_test,y_train,y_test =train_test_split(X,y,test_size=0.2,random_state=45)
 
 # object creation to call fit() method
 reg=LinearRegression()
@@ -152,4 +152,8 @@ plt.ylabel("actual")
 
 plt.show()
 
-# will start at 11:35 AM IST
+# predict based on new record 
+y_pred_new= model.predict([[7,1570,0,1658,2169,2,1,8059]])
+print(y_pred_new)
+# [350733.43]
+# [350733.43]
