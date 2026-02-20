@@ -4,6 +4,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
 import seaborn as sns
+from sklearn.metrics import confusion_matrix,precision_score,recall_score,f1_score,roc_auc_score
+import matplotlib.pyplot as plt
+
 
 # read csv using pandas and print df.head()
 
@@ -58,8 +61,6 @@ print(y_test[0])
   FN TP]]
 
 """
-from sklearn.metrics import confusion_matrix,precision_score,recall_score
-import matplotlib.pyplot as plt
 
 cm=confusion_matrix(y_test,y_pred)
 print(cm)
@@ -67,7 +68,7 @@ print(cm)
 sns.heatmap(cm,annot=True,fmt="d",cmap="Blues")
 plt.xlabel("predicted")
 plt.ylabel("actual")
-plt.show()
+# plt.show()
 
 """
 1-> survived 
@@ -101,11 +102,37 @@ precision=precision_score(y_test,y_pred)
 recall=recall_score(y_test,y_pred)
 print(precision)
 print(recall)
+"""------------------------------------------------------------------------------------------------"""
+"""
+Lower thershold -->  more positve predicted. recall increases and precision decreases 
 
-
+# thersold limit is 0.5 by default
+"""
 # trade off prec-recall
 y_prob=model.predict_proba(X_test)
 print(y_prob)
 
 
+y_prob_custom=(y_prob>0.4).astype(int)
+print(y_prob_custom)
+
+
+
+"""f1 score --> data imbalanced or not. 
+60-70 --> moderate 
+<60 --> need improvement
+Used to find: data imbalance 
+need to balance between precision and recall 
+
+"""
+
+f1=f1_score(y_test,y_pred)
+print(f1)
+
+"""
+if i randomly pick one survived and one for not survived. What is the prob model given higher for survived passenger? 
+
+"""
 # roc-auc
+roc_auc=roc_auc_score(y_test,y_pred)
+print(roc_auc)
