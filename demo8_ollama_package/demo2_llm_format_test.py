@@ -20,7 +20,7 @@ response = ollama.chat(model="gemma3:1b",
 actual_llm_output=response.message.content
 print(actual_llm_output)
 
-actual_cleared_data=re.sub(r"^```(?:json)?|```$","",actual_llm_output,flags=re.MULTILINE).strip()
+actual_cleared_data=re.sub(pattern=r"^```(?:json)?|```$",repl="",string=actual_llm_output,flags=re.MULTILINE).strip()
 print(actual_cleared_data)
 
 # json object --> make sure it is in proper json format
@@ -31,6 +31,21 @@ df=pd.DataFrame([data])
 
 print(df)
 
-print(df.columns)
+# {'age', 'city', 'name'}
+print(set(df.columns))
 
-# will start at 
+# testcase fails if columns are not present
+expected_columns={'age', 'city', 'name'}
+assert set(df.columns)==expected_columns, "Output does not match with expected_columns"
+
+
+
+
+"""
+Example 
+case 1: follow system prompt strictly 
+case 2: tries to follow user prompt
+case 3: slightly malformed/mixed output
+case 4: completely ignore system
+
+"""
