@@ -38,7 +38,9 @@ print(set(df.columns))
 expected_columns={'age', 'city', 'name'}
 assert set(df.columns)==expected_columns, "Output does not match with expected_columns"
 
+# print(df.isnull().sum().sum())
 
+assert df.isnull().sum().sum()==0, "Output has missing value is there"
 
 
 """
