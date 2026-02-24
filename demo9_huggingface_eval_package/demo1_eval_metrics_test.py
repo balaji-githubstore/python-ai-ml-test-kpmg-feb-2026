@@ -39,8 +39,8 @@ C:\\Users\\admin\\AppData\\Roaming\\nltk_data"""
 
 data=[
     {
-        "prompt":"Summarize: The cat sat on the mat.",
-        "reference":"A cat was sitting on a mat."
+        "prompt":"Summarize: The cat is sitting on the mat.",
+        "reference":"A dog is running in the park."
     },
     {
          "prompt":"Explain machine learning.",
@@ -55,8 +55,8 @@ print(df)
 """
 BLEU/ROUGE 1 and ROUGE L  --> check words and not meaning 
 
-BERTScore/SBERT --> does not check words but meaning 
-
+BERTScore --> does not check only words but meaning of the word. 
+/SBERT --> does not check words but meaning of the sentence.
 
 BLEU --> runs ollama model gemma3:1b --> gets the ouput --> do ngram words check using output and reference
 How many n-gram word sequence in the model ouput also apprears in reference?
@@ -79,7 +79,88 @@ ROUGE 1/ROUGE L
 0.1 - 0.3 --> moderate 
 0.4 --> strong overlap 
 
+BERTScore F1:
+>0.90 --> very high semantic similarity
+0.85 - 0.90 --> Good
+0.80 - 0.85 --> ok
+<0.80 --> weak 
+
+SBERT cosine similarity:
+>0.80 --> Excellent
+070 - 0.80 --> Good
+0.60 - 0.70 --> OK
+<0.60 --> weak
+
+
 """
-# 
+rouge = rouge_scorer.RougeScorer(['rouge1', 'rougeL'], use_stemmer=True)
+
+# https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
+# hugging face model for sentence embedding. it will convert the sentence into vector representation.
+sbert_model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# To avoid zero BLEU score for short sentences, we can use smoothing techniques.
+smooth=SmoothingFunction().method1
 
 
+results = []
+
+for index, row in df.iterrows():
+    prompt = row['prompt']
+    reference=row['reference']
+
+    response=ollama.chat(model="gemma3:1b",messages=[{"role": "user", "content": prompt}])
+    prediction=response.message.content
+
+    ref_token=nltk.word_tokenize(reference)
+    pred_token=nltk.word_tokenize(prediction)
+
+    bleu_score=sentence_bleu([ref_token], pred_token, smoothing_function=smooth)
+
+    rouge_score=rouge.score(reference, prediction)
+    
+    rouge_f1=rouge_score['rouge1'].fmeasure
+    rouge_l=rouge_score['rougeL'].fmeasure
+
+    """
+    BERTScore --> evaluates the meaning preservation between the prediction and reference at work (token) level.
+    P-> how many predicted positives are actully positive.  
+    R-> how many actual positives were identitifed. 
+    F1-> harmonic mean of precision and recall. final semantic similarity score. 
+    
+    """
+
+    P,R,F1=bert_score([prediction], [reference], lang='en', verbose=False)
+
+    bert_f1=F1.item()
+
+    """
+    SBert --> evaluates the meaning preservation between the prediction and reference at sentence level.
+    1-> identical meaning
+    0-> unrelated meaning 
+    -1 -> opposite meaning
+    
+    """
+
+    embeddings=sbert_model.encode([prediction, reference])
+    cosine_sim=cosine_similarity([embeddings[0]], [embeddings[1]])[0][0]
+
+    results.append({
+        # "prompt":prompt,
+        # "reference":reference,
+        # "prediction":prediction,
+        "bleu":round(bleu_score, 4),
+        "rouge1":round(rouge_f1, 4),
+        "rougeL":round(rouge_l, 4),
+        "bert_f1":round(bert_f1, 4),
+        "sbert_cosine":round(cosine_sim, 4)
+    })
+
+    print(f"Prompt: {prompt}")
+    print(f"Reference: {reference}")
+    print(f"Prediction: {prediction}")
+
+
+
+results_df=pd.DataFrame(results)
+print(results_df)
