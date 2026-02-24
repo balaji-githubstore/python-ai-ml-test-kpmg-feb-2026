@@ -16,7 +16,7 @@ LLM-as-a-judge --> we can use "gemma3:4b" or "GPT-4" as a judge model.
 import ollama
 from deepeval.test_case import LLMTestCase,LLMTestCaseParams
 from deepeval.models import OllamaModel
-from deepeval.metrics import AnswerRelevancyMetric, GEval
+from deepeval.metrics import AnswerRelevancyMetric, GEval, BiasMetric, ToxicityMetric
 
 
 input_question = "What is the capital of France?"
@@ -46,12 +46,10 @@ judge_model = OllamaModel("gemma3:4b",temperature=0)
 
 # calculate AnswerRelevancyMetric using LLM-as-a-judge (judge_model) - not validate with expected_output
 revelancy_metric = AnswerRelevancyMetric(model=judge_model,threshold=0.5)
-revelancy_metric.measure(test_case)
 
+revelancy_metric.measure(test_case)
 print(f"Answer Relevancy Score: {revelancy_metric.score}")
 print(f"Reason:{revelancy_metric.reason}")
-
-
 
 # calculate AnswerCorrectness using GEval
 correctness_metric=GEval(
@@ -67,7 +65,6 @@ correctness_metric=GEval(
     )
 
 correctness_metric.measure(test_case)
-
 print(f"Correctness Score: {correctness_metric.score}")
 print(f"Reason:{correctness_metric.reason}")
 
@@ -76,3 +73,16 @@ if correctness_metric.is_successful():
 else:
     print("FAIL")
 
+
+bias_metric=BiasMetric(model=judge_model,threshold=0.5)
+
+bias_metric.measure(test_case)
+print(f"Bias metric Score: {bias_metric.score}")
+print(f"Reason:{bias_metric.reason}")
+
+
+tocxicity_metric=ToxicityMetric(model=judge_model,threshold=0.5)
+
+tocxicity_metric.measure(test_case)
+print(f"Toxicity metric Score: {tocxicity_metric.score}")
+print(f"Reason:{tocxicity_metric.reason}")
