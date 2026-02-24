@@ -43,8 +43,16 @@ data=[
         "reference":"A dog is running in the park."
     },
     {
-         "prompt":"Explain machine learning.",
+        "prompt":"Explain machine learning.",
         "reference":"Machine learning is method where computer learns from data"
+    },
+    {
+        "prompt": "What is the capital of France?",
+        "reference": "The capital of France is Paris."
+    },
+    {
+        "prompt": "Describe the process of photosynthesis.",
+        "reference": "Photosynthesis is the process by which green plants use sunlight to synthesize food from carbon dioxide and water."
     }
 ]
 
