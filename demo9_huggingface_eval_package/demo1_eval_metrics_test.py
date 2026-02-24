@@ -64,7 +64,6 @@ How many n-gram word sequence in the model ouput also apprears in reference?
 ROUGE 1 --> Did the model use the same important words as the reference? 
 measure --> unigram (single word overlap)
 
-
 ROUGE L--> Did the model preserve the senstenace and word order? 
 measure --> longest common subsequence (LCS)
 
@@ -160,7 +159,7 @@ for index, row in df.iterrows():
     print(f"Reference: {reference}")
     print(f"Prediction: {prediction}")
 
-
-
 results_df=pd.DataFrame(results)
 print(results_df)
+
+print(results_df.mean(numeric_only=True, axis=0))
