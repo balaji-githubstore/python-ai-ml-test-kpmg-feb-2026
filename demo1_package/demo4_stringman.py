@@ -18,3 +18,11 @@ print(topic[:3])
 
 
 print(topic[0:4:2])
+
+
+name=["red","blue","yellow","green"]
+
+print(name[0])
+
+print(name[2])
+print(name[-1])
