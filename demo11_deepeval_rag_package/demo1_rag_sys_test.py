@@ -9,6 +9,7 @@ from deepeval.metrics import (
     ToxicityMetric
 )
 import ollama
+from deepeval import evaluate
 
 input_question = "What is the capital of France?"
 expected_answer = "The capital of France is Paris."
@@ -62,14 +63,13 @@ test_case = LLMTestCase(
 judge_model = OllamaModel("gemma3:4b",temperature=0)
 
 # check whether the model's response actually answser the user's question. 
-revelancy_metric = AnswerRelevancyMetric(model=judge_model,threshold=0.5)
+revelancy_metric = AnswerRelevancyMetric(model=judge_model,threshold=0.5,verbose_mode=False)
 
 # check whether the model's response is grounded to the retrieval_context and does not contracdict it. 
 # Very important for RAG system
 faithfulness_metric=FaithfulnessMetric(model=judge_model)
 
 # Evaluates whether the retrieved_document are relevant to the user question. 
-# checks - user query is relevant to the retreival system
 # checks - user query and retreival document has connection. 
 contextual_metric=ContextualRelevancyMetric(model=judge_model)
 
@@ -84,3 +84,7 @@ for metric in metrics:
     print(metric.score)
     print(metric.reason)
     print(60*"*")
+
+
+# optional evaluate 
+# evaluate(test_cases=[test_case],metrics=metrics)
