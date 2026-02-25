@@ -31,9 +31,9 @@ In real time, it is not going to be hardcoded like this for retrieved_document
 
 """
 # knowledge base 
-retrieved_document = ["France is a country in Europe. Its capital is Berlin."
-                    #   "Paris is known for the Eiffel Tower.",
-                    #   "The Louvre Museum is located in Paris."
+retrieved_document = ["France is a country in Europe. Its capital is Berlin.",
+                      "Paris is known for the Eiffel Tower.",
+                      "The Louvre Museum is located in Paris."
                       ]
 
 
